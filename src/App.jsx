@@ -7,7 +7,7 @@ import InputCreate from "./InputCreate";
 
 const App = () => {
   const [data, setData] = useState(null)
-  const urlApi = 'http://localhost:3000'
+  const urlApi = import.meta.env.VITE_APP_API_URL
 
 const fetchData = async () => {
   try {
@@ -21,7 +21,7 @@ const fetchData = async () => {
 
 useEffect(() => {
   fetchData()
-}, [])
+}, [data])
 
   return (
     <Router>
@@ -41,12 +41,8 @@ useEffect(() => {
             {/* Ruta para crear una nueva tarea */}
             <Route
               path="/create"
-              element={
-                <div>
-                  <InputCreate/>
-                </div>
-              }
-            />
+              element={<div><InputCreate/></div>}/>
+
             {/* Rutas dinámicas para cada tarea */}
             {data.map(item => (
               <Route key={item._id} path={`/${item._id}`} element={<ItemDetailPage item={item}/>} />
